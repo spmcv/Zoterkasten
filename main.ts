@@ -8,11 +8,11 @@ const SCALED_ICON = `
 </svg>`;
 
 interface ZoterkastenSettings {
-	mySetting: string;
+	read_only_api_key: string;
 }
 
 const DEFAULT_SETTINGS: ZoterkastenSettings = {
-	mySetting: 'default'
+	read_only_api_key: ''
 }
 
 export default class Zoterkasten extends Plugin {
@@ -129,13 +129,13 @@ class ZoterkastenSettingTab extends PluginSettingTab {
 		containerEl.empty();
 
 		new Setting(containerEl)
-			.setName('Setting #1')
-			.setDesc('It\'s a secret')
+			.setName('Zotero (Read-Only) API Key')
+			.setDesc('If you do not already have a key, go to https://www.zotero.org/settings/keys/new to generate one. When creating a new key, make sure to read the available policy options carefully and to specify read-only access to only the libraries you wish to expose.')
 			.addText(text => text
-				.setPlaceholder('Enter your secret')
-				.setValue(this.plugin.settings.mySetting)
+				.setPlaceholder('Enter your key here')
+				.setValue(this.plugin.settings.read_only_api_key)
 				.onChange(async (value) => {
-					this.plugin.settings.mySetting = value;
+					this.plugin.settings.read_only_api_key = value;
 					await this.plugin.saveSettings();
 				}));
 	}
