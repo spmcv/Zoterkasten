@@ -2,16 +2,16 @@ import { App, Editor, MarkdownView, Modal, Notice, Plugin, PluginSettingTab, Set
 
 // Remember to rename these classes and interfaces!
 
-interface MyPluginSettings {
+interface ZoterkastenSettings {
 	mySetting: string;
 }
 
-const DEFAULT_SETTINGS: MyPluginSettings = {
+const DEFAULT_SETTINGS: ZoterkastenSettings = {
 	mySetting: 'default'
 }
 
-export default class MyPlugin extends Plugin {
-	settings: MyPluginSettings;
+export default class Zoterkasten extends Plugin {
+	settings: ZoterkastenSettings;
 
 	async onload() {
 		await this.loadSettings();
@@ -66,7 +66,7 @@ export default class MyPlugin extends Plugin {
 		});
 
 		// This adds a settings tab so the user can configure various aspects of the plugin
-		this.addSettingTab(new SampleSettingTab(this.app, this));
+		this.addSettingTab(new ZoterkastenSettingTab(this.app, this));
 
 		// If the plugin hooks up any global DOM events (on parts of the app that doesn't belong to this plugin)
 		// Using this function will automatically remove the event listener when this plugin is disabled.
@@ -107,10 +107,10 @@ class SampleModal extends Modal {
 	}
 }
 
-class SampleSettingTab extends PluginSettingTab {
-	plugin: MyPlugin;
+class ZoterkastenSettingTab extends PluginSettingTab {
+	plugin: Zoterkasten;
 
-	constructor(app: App, plugin: MyPlugin) {
+	constructor(app: App, plugin: Zoterkasten) {
 		super(app, plugin);
 		this.plugin = plugin;
 	}
