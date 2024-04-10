@@ -1,10 +1,12 @@
 import { addIcon, App, Editor, MarkdownView, Modal, Notice, Plugin, PluginSettingTab, Setting } from 'obsidian';
 
 // The official "Z" icon scaled from 16x16 to 24x24
-const SCALED_ICON = `
+const ICON_OFFICIAL_SCALED = `
 <?xml version="1.0" encoding="UTF-8"?>
 <svg version="1.1" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
- <polygon transform="matrix(1.5 0 0 1.5 .636 0)" points="13.863 12.142 13.863 12.021 6.448 12.021 13.863 2.73 13.027 1 2.137 1 2.137 3.8 2.137 3.921 8.822 3.921 1.289 13.233 2.137 15 13.863 15" fill="#db2c3a" stroke-width="1.3333"/>
+ <polygon transform="matrix(1.5 0 0 1.5 .636 0)" points="13.863 12.142 13.863\
+ 12.021 6.448 12.021 13.863 2.73 13.027 1 2.137 1 2.137 3.8 2.137 3.921 8.822\
+ 3.921 1.289 13.233 2.137 15 13.863 15" fill="#db2c3a" stroke-width="1.3333"/>
 </svg>`;
 
 interface ZoterkastenSettings {
@@ -24,10 +26,10 @@ export default class Zoterkasten extends Plugin {
 		await this.loadSettings();
 
 		// This adds the official Zotero icon.
-		addIcon('z', SCALED_ICON)
+		addIcon('Z', ICON_OFFICIAL_SCALED)
 
 		// This creates an icon in the left ribbon.
-		const ribbonIconEl = this.addRibbonIcon('z', 'Zoterkasten', (evt: MouseEvent) => {
+		const ribbonIconEl = this.addRibbonIcon('Z', 'Zoterkasten', (evt: MouseEvent) => {
 			// Called when the user clicks the icon.
 			new Notice('This is a notice!');
 		});
