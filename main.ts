@@ -44,7 +44,8 @@ export default class Zoterkasten extends Plugin {
 				}
 			} else {
 				// TODO catch this throw in an error message
-				throw Error('API key is not 24 characters and alphanumeric');
+				throw new Error('API key is expected to be 24 \
+				characters and alphanumeric');
 			}
 		} else {
 			// trivial case
