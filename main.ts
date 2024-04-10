@@ -21,6 +21,15 @@ const DEFAULT_SETTINGS: ZoterkastenSettings = {
 export default class Zoterkasten extends Plugin {
 	settings: ZoterkastenSettings;
 
+	getSettingLogging(): boolean {
+		return this.settings.emit_records_to_console;
+	}
+
+	setSettingLogging(value: boolean): void {
+		this.settings.emit_records_to_console = value;
+		console.log('Logging is %sabled', (value) ? ('en') : ('dis'));
+	}
+
 	async onload() {
 		await this.loadSettings();
 
@@ -129,7 +138,6 @@ access only to the libraries you wish to expose.';
 
 // Hardcoded values for console logging setting parameters
 const SETTING_LOGGING_NAME = 'Enable Logging';
-const SETTING_LOGGING_EMIT = 'Logging is %sabled';
 const SETTING_LOGGING_DESC = 'This emits logging messages to the console. To \
 view the output, click on the Console tab in the Developer Tools window by \
 pressing Ctrl+Shift+I in Windows or Linux, or Cmd-Option-I on macOS.'
@@ -156,7 +164,7 @@ class ZoterkastenSettingTab extends PluginSettingTab {
 				.onChange(async (value) => {
 					this.plugin.settings.read_only_api_key = value;
 					await this.plugin.saveSettings();
-					if (this.plugin.settings.emit_records_to_console) {
+					if (this.plugin.getSettingLogging()) {
 						console.log(SETTING_API_KEY_EMIT, (value) ? (value) : ('NULL'));
 					}
 				}));
@@ -167,11 +175,10 @@ class ZoterkastenSettingTab extends PluginSettingTab {
 			.setName(SETTING_LOGGING_NAME)
 			.setDesc(SETTING_LOGGING_DESC)
 			.addToggle(comp => comp
-				.setValue(this.plugin.settings.emit_records_to_console)
+				.setValue(this.plugin.getSettingLogging())
 				.onChange(async (value) => {
-					this.plugin.settings.emit_records_to_console = value;
+					this.plugin.setSettingLogging(value);
 					await this.plugin.saveSettings();
-					console.log(SETTING_LOGGING_EMIT, (value) ? ('en') : ('dis'));
 				}));
 	}
 }
