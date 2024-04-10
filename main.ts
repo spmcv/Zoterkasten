@@ -1,13 +1,12 @@
 import { addIcon, App, Editor, MarkdownView, Modal, Notice, Plugin, PluginSettingTab, Setting } from 'obsidian';
 
 // The official "Z" icon scaled from 16x16 to 24x24
-const ICON_OFFICIAL_SCALED = `
-<?xml version="1.0" encoding="UTF-8"?>
-<svg version="1.1" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
- <polygon transform="matrix(1.5 0 0 1.5 .636 0)" points="13.863 12.142 13.863\
- 12.021 6.448 12.021 13.863 2.73 13.027 1 2.137 1 2.137 3.8 2.137 3.921 8.822\
- 3.921 1.289 13.233 2.137 15 13.863 15" fill="#db2c3a" stroke-width="1.3333"/>
-</svg>`;
+const ICON_OFFICIAL_SCALED = '<?xml version="1.0" encoding="UTF-8"?> \
+<svg version="1.1" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"> \
+<polygon transform="matrix(1.5 0 0 1.5 .636 0)" points="13.863 12.142 13.863 \
+12.021 6.448 12.021 13.863 2.73 13.027 1 2.137 1 2.137 3.8 2.137 3.921 8.822 \
+3.921 1.289 13.233 2.137 15 13.863 15" fill="#db2c3a" stroke-width="1.3333"/> \
+</svg>';
 
 interface ZoterkastenSettings {
 	read_only_api_key: string;
