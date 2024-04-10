@@ -9,10 +9,12 @@ const SCALED_ICON = `
 
 interface ZoterkastenSettings {
 	read_only_api_key: string;
+	emit_to_console: boolean
 }
 
 const DEFAULT_SETTINGS: ZoterkastenSettings = {
-	read_only_api_key: ''
+	read_only_api_key: '',
+	emit_to_console: false
 }
 
 export default class Zoterkasten extends Plugin {
@@ -137,6 +139,22 @@ class ZoterkastenSettingTab extends PluginSettingTab {
 				.onChange(async (value) => {
 					this.plugin.settings.read_only_api_key = value;
 					await this.plugin.saveSettings();
+					if (this.plugin.settings.emit_to_console) {
+						console.log('Set API key as %s', (value) ? (value) : ('NULL'));
+					}
+				}));
+
+		new Setting(containerEl).setName('Debug').setHeading();
+
+		new Setting(containerEl)
+			.setName('Enable Logging')
+			.setDesc('Emit logging records to the console. To view the output, click on the Console tab in the Developer Tools window by pressing Ctrl+Shift+I in Windows and Linux, or Cmd-Option-I on macOS.')
+			.addToggle(comp => comp
+				.setValue(this.plugin.settings.emit_to_console)
+				.onChange(async (value) => {
+					this.plugin.settings.emit_to_console = value;
+					await this.plugin.saveSettings();
+					console.log('Logging is %sabled', (value) ? ('en') : ('dis'));
 				}));
 	}
 }
