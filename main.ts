@@ -123,17 +123,17 @@ class SampleModal extends Modal {
 const SETTING_API_KEY_NAME = 'Zotero (Read-Only) API Key';
 const SETTING_API_KEY_HOLD = 'Enter your key here';
 const SETTING_API_KEY_EMIT = 'Set API key as %s';
-const SETTING_API_KEY_DESC = 'If you do not already have a key, you can \
-generate one by going to https://www.zotero.org/settings/keys/new. When \
-creating a new key, make sure to read the available policy options carefully \
-and to specify read-only access to only the libraries you wish to expose.';
+const SETTING_API_KEY_DESC = 'You can generate a new key at \
+https://www.zotero.org/settings/keys/new if you do not already have one. \
+Please read carefully the available policy options and specify read-only \
+access only to the libraries you wish to expose.';
 
 // Hardcoded values for console logging setting parameters
 const SETTING_LOGGING_NAME = 'Enable Logging';
 const SETTING_LOGGING_EMIT = 'Logging is %sabled';
-const SETTING_LOGGING_DESC = 'Emit logging records to the console. To view \
-the output,click on the Console tab in the Developer Tools window by pressing \
-Ctrl+Shift+I in Windows and Linux, or Cmd-Option-I on macOS.'
+const SETTING_LOGGING_DESC = 'This emits logging messages to the console. To \
+view the output, click on the Console tab in the Developer Tools window by \
+pressing Ctrl+Shift+I in Windows or Linux, or Cmd-Option-I on macOS.'
 
 class ZoterkastenSettingTab extends PluginSettingTab {
 	plugin: Zoterkasten;
