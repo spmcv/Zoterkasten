@@ -12,7 +12,6 @@
 	"author": "spmcv",
 	"license": "MIT",
 	"devDependencies": {
-		"@retorquere/zotero-sync": "^1.0.27",
 		"@types/node": "^16.11.6",
 		"@typescript-eslint/eslint-plugin": "5.29.0",
 		"@typescript-eslint/parser": "5.29.0",
@@ -21,5 +20,8 @@
 		"obsidian": "latest",
 		"tslib": "2.4.0",
 		"typescript": "4.7.4"
+	},
+	"dependencies": {
+		"@retorquere/zotero-sync": "^1.0.27"
 	}
 }
