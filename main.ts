@@ -9,12 +9,12 @@ const SCALED_ICON = `
 
 interface ZoterkastenSettings {
 	read_only_api_key: string;
-	emit_to_console: boolean
+	emit_records_to_console: boolean
 }
 
 const DEFAULT_SETTINGS: ZoterkastenSettings = {
 	read_only_api_key: '',
-	emit_to_console: false
+	emit_records_to_console: false
 }
 
 export default class Zoterkasten extends Plugin {
@@ -117,6 +117,22 @@ class SampleModal extends Modal {
 	}
 }
 
+// Hardcoded values for Zotero API key setting parameters
+const SETTING_API_KEY_NAME = 'Zotero (Read-Only) API Key';
+const SETTING_API_KEY_HOLD = 'Enter your key here';
+const SETTING_API_KEY_EMIT = 'Set API key as %s';
+const SETTING_API_KEY_DESC = 'If you do not already have a key, you can \
+generate one by going to https://www.zotero.org/settings/keys/new. When \
+creating a new key, make sure to read the available policy options carefully \
+and to specify read-only access to only the libraries you wish to expose.';
+
+// Hardcoded values for console logging setting parameters
+const SETTING_LOGGING_NAME = 'Enable Logging';
+const SETTING_LOGGING_EMIT = 'Logging is %sabled';
+const SETTING_LOGGING_DESC = 'Emit logging records to the console. To view \
+the output,click on the Console tab in the Developer Tools window by pressing \
+Ctrl+Shift+I in Windows and Linux, or Cmd-Option-I on macOS.'
+
 class ZoterkastenSettingTab extends PluginSettingTab {
 	plugin: Zoterkasten;
 
@@ -131,30 +147,30 @@ class ZoterkastenSettingTab extends PluginSettingTab {
 		containerEl.empty();
 
 		new Setting(containerEl)
-			.setName('Zotero (Read-Only) API Key')
-			.setDesc('If you do not already have a key, go to https://www.zotero.org/settings/keys/new to generate one. When creating a new key, make sure to read the available policy options carefully and to specify read-only access to only the libraries you wish to expose.')
+			.setName(SETTING_API_KEY_NAME)
+			.setDesc(SETTING_API_KEY_DESC)
 			.addText(text => text
-				.setPlaceholder('Enter your key here')
+				.setPlaceholder(SETTING_API_KEY_HOLD)
 				.setValue(this.plugin.settings.read_only_api_key)
 				.onChange(async (value) => {
 					this.plugin.settings.read_only_api_key = value;
 					await this.plugin.saveSettings();
-					if (this.plugin.settings.emit_to_console) {
-						console.log('Set API key as %s', (value) ? (value) : ('NULL'));
+					if (this.plugin.settings.emit_records_to_console) {
+						console.log(SETTING_API_KEY_EMIT, (value) ? (value) : ('NULL'));
 					}
 				}));
 
 		new Setting(containerEl).setName('Debug').setHeading();
 
 		new Setting(containerEl)
-			.setName('Enable Logging')
-			.setDesc('Emit logging records to the console. To view the output, click on the Console tab in the Developer Tools window by pressing Ctrl+Shift+I in Windows and Linux, or Cmd-Option-I on macOS.')
+			.setName(SETTING_LOGGING_NAME)
+			.setDesc(SETTING_LOGGING_DESC)
 			.addToggle(comp => comp
-				.setValue(this.plugin.settings.emit_to_console)
+				.setValue(this.plugin.settings.emit_records_to_console)
 				.onChange(async (value) => {
-					this.plugin.settings.emit_to_console = value;
+					this.plugin.settings.emit_records_to_console = value;
 					await this.plugin.saveSettings();
-					console.log('Logging is %sabled', (value) ? ('en') : ('dis'));
+					console.log(SETTING_LOGGING_EMIT, (value) ? ('en') : ('dis'));
 				}));
 	}
 }
