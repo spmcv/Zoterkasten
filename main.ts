@@ -30,6 +30,31 @@ export default class Zoterkasten extends Plugin {
 		console.log('Logging is %sabled', (value) ? ('en') : ('dis'));
 	}
 
+	getSettingKey(): string {
+		return this.settings.read_only_api_key;
+	}
+
+	setSettingKey(value: string): void {
+		if(value) {
+			// non-trivial case
+			if (value.match(/[a-zA-Z0-9]{24}/)) {
+				this.settings.read_only_api_key = value;
+				if (this.getSettingLogging()) {
+					console.log('Set API key as %s', value);
+				}
+			} else {
+				// TODO catch this throw in an error message
+				throw Error('API key is not 24 characters and alphanumeric');
+			}
+		} else {
+			// trivial case
+			this.settings.read_only_api_key = value;
+			if (this.getSettingLogging()) {
+				console.log('Set API key as empty string');
+			}
+		}
+	}
+
 	async onload() {
 		await this.loadSettings();
 
@@ -130,7 +155,6 @@ class SampleModal extends Modal {
 // Hardcoded values for Zotero API key setting parameters
 const SETTING_API_KEY_NAME = 'Zotero (Read-Only) API Key';
 const SETTING_API_KEY_HOLD = 'Enter your key here';
-const SETTING_API_KEY_EMIT = 'Set API key as %s';
 const SETTING_API_KEY_DESC = 'You can generate a new key at \
 https://www.zotero.org/settings/keys/new if you do not already have one. \
 Please read carefully the available policy options and specify read-only \
@@ -160,13 +184,10 @@ class ZoterkastenSettingTab extends PluginSettingTab {
 			.setDesc(SETTING_API_KEY_DESC)
 			.addText(text => text
 				.setPlaceholder(SETTING_API_KEY_HOLD)
-				.setValue(this.plugin.settings.read_only_api_key)
+				.setValue(this.plugin.getSettingKey())
 				.onChange(async (value) => {
-					this.plugin.settings.read_only_api_key = value;
+					this.plugin.setSettingKey(value)
 					await this.plugin.saveSettings();
-					if (this.plugin.getSettingLogging()) {
-						console.log(SETTING_API_KEY_EMIT, (value) ? (value) : ('NULL'));
-					}
 				}));
 
 		new Setting(containerEl).setName('Debug').setHeading();
