@@ -21,19 +21,37 @@ const DEFAULT_SETTINGS: ZoterkastenSettings = {
 export default class Zoterkasten extends Plugin {
 	settings: ZoterkastenSettings;
 
+	/**
+	 * Getter method for console logging.
+	 * @returns true if enabled, false otherwise
+	 */
 	getSettingLogging(): boolean {
 		return this.settings.emit_records_to_console;
 	}
 
+	/**
+	 * Setter method for console logging.
+	 * @param value - true to enable, false otherwise
+	 * @remarks console always receives a notification of a value change
+	 */
 	setSettingLogging(value: boolean): void {
 		this.settings.emit_records_to_console = value;
 		console.log('Logging is %sabled', (value) ? ('en') : ('dis'));
 	}
 
+	/**
+	 * Getter method for the Zotero API Key.
+	 * @returns the API key or, if uninitialized, an empty string
+	 */
 	getSettingKey(): string {
 		return this.settings.read_only_api_key;
 	}
 
+	/**
+	 * Setter method for the Zotero API Key.
+	 * @param value - the new API key or, if uninitialized, an empty string
+	 * @throws RangeError if the key fails pre-validation
+	 */
 	setSettingKey(value: string): void {
 		if(value) {
 			// non-trivial case
@@ -44,8 +62,7 @@ export default class Zoterkasten extends Plugin {
 				}
 			} else {
 				// TODO catch this throw in an error message
-				throw new Error('API key is expected to be 24 \
-				characters and alphanumeric');
+				throw new RangeError('API key is not 24 characters and alphanumeric');
 			}
 		} else {
 			// trivial case
